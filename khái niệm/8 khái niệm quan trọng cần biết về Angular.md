@@ -38,7 +38,7 @@ Nếu chỉ định nghĩa một class thì Angular không biết cách hiểu c
 ## Template
 Template của Angular dựa trên HTML; HTML bình thường cũng có thể dùng làm template.
 
-```
+```ts
 @Component({
   template: `<p>deepthan</p>`
 })
@@ -54,22 +54,22 @@ Cả property binding và event binding đều được gọi chung là data bin
 
 1. Interpolation (chèn biểu thức)
 
-    ```
+    ```ts
     <p>Xin chào，{{data.name}}</p>
     ```
 2. Property binding
 
-    ```
+    ```ts
     [deep] = 'data[0]'
     ```
 3. Event binding
 
-    ```
+    ```ts
     (sendData) = getData(value)
     ```
 4. Two-way binding (ràng buộc hai chiều)
 
-    ```
+    ```ts
     <input [(ngModel)='value']>
     ```
     [()] là cú pháp sugar để thực hiện two-way binding; ngModel là directive hỗ trợ two-way binding. Khi giá trị input thay đổi sẽ tự cập nhật vào value, và khi value trong class thay đổi cũng cập nhật lại input.
@@ -78,12 +78,12 @@ Cả property binding và event binding đều được gọi chung là data bin
 Directive có thể tương tác linh hoạt với DOM, thay đổi style hoặc layout.
 1. Structural directives: thêm/xóa/sửa DOM, ví dụ ngIf, ngFor
 
-    ```
+    ```ts
     <p *ngIf='bol==true'></p>
     ```
 2. Attribute directives: thay đổi giao diện hoặc hành vi của element, ví dụ ngStyle, ngClass
 
-    ```
+    ```ts
     html:
     <p [ngStyle]='setStyles()' </p>
     ts:
@@ -99,6 +99,7 @@ Service là đơn vị đóng gói một chức năng riêng, giống thư việ
 
 Ví dụ service thông báo log:
 
+```ts
     // import statement
     @Injectable()
     export class LoggerService {
@@ -111,12 +112,14 @@ Ví dụ service thông báo log:
       warn(msg: string) {  }
       error(msg: string) { }
     }
+```
 
 ## Dependency Injection (DI)
 Thông qua cơ chế DI, service và các module khác có thể được inject vào bất kỳ component (hoặc module hoặc service) nào mà developer không cần quan tâm cách chúng được khởi tạo. DI giúp quản lý phụ thuộc giữa các module.
 
 Ví dụ:
 
+```ts
     import {LoggerService} from './logger-service';
     // other import statement
     @Component({
@@ -129,6 +132,7 @@ Ví dụ:
         logger.debug('xxx');
       }
     }
+```
 
 Metadata providers trong @Component là chìa khóa của DI — nó tạo một injector cho component và khởi tạo một instance LoggerService lưu trong injector đó. Khi component cần LoggerService, chỉ khai báo một tham số kiểu LoggerService trong constructor, Angular sẽ tự tìm instance trong injector và truyền vào khi khởi tạo component, nhờ đó component có thể sử dụng LoggerService.
 
